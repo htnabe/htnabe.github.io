@@ -45,7 +45,7 @@
     ]
   },
   "devDependencies": {
-    "@htnabe/prettier-plugin-go-template": "^0.0.5",
+    "@htnabe/prettier-plugin-go-template": "^0.0.6",
     "algolia-uploader": "^0.0.20"
   }
 }

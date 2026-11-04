@@ -1,5 +1,5 @@
 {
-  "sum": "755e8c809a61d416",
+  "sum": "bd742e35713a9cad",
   "dependencySources": {
     "dependencies": {
       "@algolia/client-search": "github.com/htnabe/HikaeMe/v2",
