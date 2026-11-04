@@ -19,7 +19,7 @@
 - Bluesky 投稿ワークフローと投稿スクリプトの既定 URL が `t-pot.me` を参照する。
 - `package.json` の Markdown リンクチェックにも `t-pot.me` が設定されている。
 - 記事内にも旧ドメインへのリンクがある。
-- `Deploy GitHub Pages` ワークフローを追加し、初回デプロイ前の確認中。
+- `Deploy GitHub Pages` ワークフローを追加し、`https://htnabe.github.io/` で初回公開済み。
 - public リポジトリ `htnabe/htnabe.github.io` は作成済み。既存の private リポジトリ `htnabe/t-pot` からソースを新しい Git 履歴で移行する。
 
 ## 重要な制約とリスク
