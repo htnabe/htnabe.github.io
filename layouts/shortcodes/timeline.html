@@ -1,0 +1,44 @@
+{{- $career := site.Params.author.career | default (slice) -}}
+
+{{- if gt (len $career) 0 -}}
+  <section class="career-timeline" aria-label="Career timeline">
+    <ul class="career-timeline__list list-unstyled mb-0">
+      {{- range $entry := $career -}}
+        <li class="career-timeline__year-block">
+          <article class="career-card">
+            <header
+              class="career-card__header d-flex justify-content-between align-items-center gap-3 flex-wrap"
+            >
+              <span class="timeline-year badge bg-primary">{{ $entry.year }}</span>
+            </header>
+
+            {{- with $entry.events -}}
+              <ul class="career-card__events list-unstyled mb-0">
+                {{- range . -}}
+                  <li class="career-card__event">
+                    <h5 class="career-card__title mb-1">{{ .title }}</h5>
+                    {{- with .description -}}
+                      <div class="career-card__description text-muted mb-0">
+                        {{ . | markdownify }}
+                      </div>
+                    {{- end -}}
+                  </li>
+                {{- end -}}
+              </ul>
+            {{- else -}}
+              {{- with $entry.title -}}
+                <h5 class="career-card__title mb-1">{{ . }}</h5>
+              {{- else -}}
+                <h5 class="career-card__title mb-1">Career Update</h5>
+              {{- end -}}
+              {{- with $entry.description -}}
+                <p class="career-card__description text-muted mb-0">{{ . | markdownify }}</p>
+              {{- end -}}
+            {{- end -}}
+
+          </article>
+        </li>
+      {{- end -}}
+    </ul>
+  </section>
+{{- end -}}

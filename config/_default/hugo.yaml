@@ -1,0 +1,85 @@
+baseURL: "https://htnabe.github.io/"
+title: "T-Pot"
+enableEmoji: true
+enableGitInfo: true
+enableRobotsTXT: true
+timeZone: "Asia/Tokyo"
+
+build:
+  writeStats: true
+
+defaultContentLanguage: "ja"
+defaultContentLanguageInSubdir: false
+
+languages:
+  ja:
+    contentDir: content/ja
+    locale: "ja-JP"
+    label: "日本語"
+    weight: 1
+    menus:
+      main:
+        - name: Home
+          url: /
+          weight: 10
+        - name: About
+          url: /about/
+          weight: 20
+        - name: Author
+          url: /author/
+          weight: 30
+    params:
+      description: "私生活で得られたTipsから、使ってみて便利だった道具・アプリケーション開発に関するHowTo等をまとめています。"
+      algolia:
+        indexName: "nabeBlog"
+  en:
+    contentDir: content/en
+    locale: "en-US"
+    label: "English"
+    weight: 2
+    menus:
+      main:
+        - name: Home
+          url: /en/
+          weight: 10
+        - name: About
+          url: /en/about/
+          weight: 20
+        - name: Author
+          url: /en/author/
+          weight: 30
+    params:
+      description: "I share practical tips from daily life, useful tools, and application development how-tos."
+      author:
+        comment: "Kobe has started to feel familiar. I enjoy running and cycling at a relaxed pace."
+        career:
+          - year: "2020"
+            title: "JSME Chugoku-Shikoku Branch 58th General Meeting and Lecture"
+            description: ":point_right: [Presentation details](https://www.jstage.jst.go.jp/article/jsmecs/2020.58/0/2020.58_09c5/_article/-char/ja/)"
+          - year: "2021"
+            title: "JSME Dynamics and Design Conference 2021"
+            description: ":point_right: [Presentation details](https://www.jstage.jst.go.jp/article/jsmedmc/2021/0/2021_143/_article/-char/ja/)"
+          - year: "2022"
+            events:
+              - title: "Matsue Open Source Business Contest 2022, Encouragement Prize"
+                description: ":point_right: [Award details](https://www.shimane-oss.org/biz-contest2022/final.html)"
+              - title: "JSME Dynamics and Design Conference 2022"
+                description: ":point_right: [Presentation details](https://www.jstage.jst.go.jp/article/jsmedmc/2022/0/2022_152/_article/-char/ja/)"
+              - title: "Fresh IT Award 2022"
+                description: ":point_right: [Excellent Prize](https://freshitaward.wixsite.com/freshitaward2023/2022%E5%B9%B4%E5%BA%A6)"
+          - year: "2023"
+            events:
+              - title: "Transactions of the JSME (Peer-reviewed)"
+                description: ":point_right: [Natural frequencies and mode shapes of an orthotropic rectangular prism with all faces slip-supported](https://www.jstage.jst.go.jp/article/transjsme/89/921/89_22-00112/_article/-char/ja)"
+          - year: "2025"
+            events:
+              - title: "React Osaka 02"
+                description: ":point_right: [I tried openapi-fetch and openapi-typescript!](https://speakerdeck.com/htnabe/openapi-fetch-toopenapi-typescriptwoshi-tutemita-i-tried-openapi-fetch-and-openapi-typescript)"
+              - title: "kansai.ts #10"
+                description: ":point_right: [Rebuilding an unmaintained CLI with TypeScript](https://speakerdeck.com/htnabe/mentesarenakunatutacliwotypescriptdekai-fa-sinaositahua)"
+              - title: "React Osaka 08"
+                description: ":point_right: [Tried hosting a Next.js app with Lambda Web Adapter](https://speakerdeck.com/htnabe/tried-hosting-next-dot-js-app-with-lambda-web-adapter)"
+          - year: "2026"
+            events:
+              - title: "React Osaka 03"
+                description: ":point_right: [Design Pattern for Data Router/Loader/Action](https://speakerdeck.com/htnabe/action)"

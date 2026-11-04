@@ -1,0 +1,138 @@
+dateformat: "2006/01/02"
+defaultGoogleFonts: ""
+googlefonts: "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Orbitron:wght@400;700&display=swap" # Optional, Include google fonts.
+enableHighlight: true
+amazonAssociateId: "takenoko06b-22" # Optional, Include amazon affiliate ID(eg. hikaeme-22)
+since: "" # you can add the start period
+defaultThumbnailUrl: "https://res.cloudinary.com/takenoko/image/upload/v1632659294/NabeBlog/aboutPage-Thumbnail_lphxof.webp" # https://~ format is also supported
+logoImageUrl: "https://res.cloudinary.com/takenoko/image/upload/v1722703191/logos/blog-only-logo_lb6etv.svg" # https://~ format is also supported
+copyright: "Hiroshi Tanabe"
+contactUrl: "https://docs.google.com/forms/d/e/1FAIpQLSd_qnDxp2DgMqo3tWa262--zBZvdA2wpWEj53uXiY06mR-m1A/viewform" # Optional, if you want to add a contact form / sns accFount please write the URL here
+enableAlgolia: true
+useCloudinary: true
+cloudinaryCloudName: "takenoko"
+logoFontFamily: "Orbitron"
+favicon:
+  defaultUrl: "https://res.cloudinary.com/takenoko/image/upload/v1630765927/logos/favicon_irx8pk.png" # Required, add a url to the icon image. eg: "img/icon.webp"
+  svgUrl: "https://res.cloudinary.com/takenoko/image/upload/v1630765889/logos/favicon_e5u8fh.svg" # Required, add a url to the svg image
+  appleUrl: "https://res.cloudinary.com/takenoko/image/upload/v1630765927/logos/favicon_irx8pk.png" # Required, add a url to the 180x180 size image
+
+author:
+  thumbnailUrl: "https://res.cloudinary.com/takenoko/image/upload/v1740720724/Profile/profile_50_zbtfc4.jpg"
+  name: "Nabe_cyan"
+  comment: "神戸もそろそろ飽きてきた。ゆるーくランニング・サイクリングを楽しんでます。"
+  sns:
+    github:
+      icon: "bi bi-github"
+      url: "https://github.com/htnabe"
+    bluesky:
+      icon: "bi bi-bluesky"
+      url: "https://bsky.app/profile/htnabe.bsky.social"
+    x:
+      icon: "bi bi-twitter-x"
+      url: "https://x.com/htnabe_me"
+  # Optional, if you are using GitHub Sponsors, you can add the url
+  githubSponsorUrl: "https://github.com/sponsors/htnabe/button"
+  githubSponsorButtonUrl: "https://github.com/sponsors/htnabe/button"
+  skills:
+    maxYears: 4
+    groups:
+      - name: "Programming Languages"
+        items:
+          - name: "TypeScript"
+            years: 2
+            purpose: "work"
+          - name: "JavaScript"
+            years: 3
+            purpose: "hobby"
+          - name: "C#"
+            years: 2
+            purpose: "work"
+          - name: "Fortran"
+            years: 1
+            purpose: "work"
+          - name: "VBA"
+            years: 1
+            purpose: "work"
+          - name: "Octave / MATLAB"
+            years: 2
+            purpose: "research"
+      - name: "Libraries / Frameworks"
+        items:
+          - name: "React"
+            years: 3.3
+            purpose: "work and hobby"
+          - name: "Bootstrap"
+            years: 1.5
+            purpose: "work and hobby"
+          - name: "Material UI"
+            years: 0.5
+            purpose: "work"
+          - name: "Blazor"
+            years: 0.5
+            purpose: "work"
+          - name: "Expo"
+            years: 2
+            purpose: "hobby"
+          - name: "Hugo"
+            years: 3.5
+            purpose: "hobby"
+      - name: "Cloud / Data / Tools"
+        items:
+          - name: "OpenAPI"
+            years: 0.5
+            purpose: "work"
+          - name: "SQL Server / MySQL"
+            years: 0.6
+            purpose: "work and hobby"
+          - name: "AWS"
+            years: 0.5
+            purpose: "work"
+
+  career:
+    - year: "2020"
+      title: "日本機械学会 中国四国支部 第58期総会・講演会"
+      description: ":point_right: [発表内容](https://www.jstage.jst.go.jp/article/jsmecs/2020.58/0/2020.58_09c5/_article/-char/ja/)"
+    - year: "2021"
+      title: "日本機械学会 D&D2021"
+      description: ":point_right: [発表内容](https://www.jstage.jst.go.jp/article/jsmedmc/2021/0/2021_143/_article/-char/ja/)"
+    - year: "2022"
+      events:
+        - title: "松江オープンソース活用ビジネスコンテスト2022 奨励賞"
+          description: ":point_right: [奨励賞](https://www.shimane-oss.org/biz-contest2022/final.html)"
+        - title: "日本機械学会 D&D2022"
+          description: ":point_right: [発表内容](https://www.jstage.jst.go.jp/article/jsmedmc/2022/0/2022_152/_article/-char/ja/)"
+        - title: "フレッシュITあわ～ど2022"
+          description: ":point_right: [優秀賞](https://freshitaward.wixsite.com/freshitaward2023/2022%E5%B9%B4%E5%BA%A6)"
+    - year: "2023"
+      events:
+        - title: "日本機械学会論文集（査読付き）"
+          description: ":point_right: [全面が滑り支持された直交異方性を有する直方体の固有角振動数と固有モード](https://www.jstage.jst.go.jp/article/transjsme/89/921/89_22-00112/_article/-char/ja)"
+    - year: "2025"
+      events:
+        - title: "React Osaka 02"
+          description: ":point_right: [Openapi-fetch とOpenapi-typescriptを使ってみた！/ I tried openapi-fetch and openapi-typescript!](https://speakerdeck.com/htnabe/openapi-fetch-toopenapi-typescriptwoshi-tutemita-i-tried-openapi-fetch-and-openapi-typescript)"
+        - title: "kansai.ts #10"
+          description: ":point_right: [メンテされなくなったCLIをTypeScriptで開発しなおした話](https://speakerdeck.com/htnabe/mentesarenakunatutacliwotypescriptdekai-fa-sinaositahua)"
+        - title: "React Osaka 08"
+          description: ":point_right: [Lambda Web Adapter使ってNext.jsのアプリをホストしてみた！ / Tried hosting Next.js app with Lambda Web Adapter](https://speakerdeck.com/htnabe/tried-hosting-next-dot-js-app-with-lambda-web-adapter)"
+    - year: "2026"
+      events:
+        - title: "React Osaka 03"
+          description: ":point_right: [Dataモードでのデザインパターン/Design Pattern for Data Router/Loader/Action](https://speakerdeck.com/htnabe/action)"
+
+algolia:
+  vars:
+    - "title"
+    - "summary"
+    - "content"
+    - "date"
+    - "publishdate"
+    - "permalink"
+    - "keywords"
+  params:
+    - "tags"
+    - "categories"
+  appId: "938E446F5B"
+  searchOnlyApiKey: "4ddadfc62ff049cee3aff046f814c3d8"
+  indexName: "nabeBlog"

@@ -1,0 +1,85 @@
+name: Post Bluesky on new posts
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - content/ja/posts/**/*.md
+      - content/en/posts/**/*.md
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run only (do not post to Bluesky)"
+        required: false
+        default: true
+        type: boolean
+      diff_range:
+        description: "Optional git diff range (example: HEAD~1..HEAD)"
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: read
+  models: read
+
+concurrency:
+  group: bluesky-new-posts-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  post-new-articles:
+    if: github.event_name != 'push' || vars.BLUESKY_AUTOPUBLISH_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Post new articles to Bluesky
+        env:
+          SITE_BASE_URL: https://htnabe.github.io
+          GH_MODELS_MODEL: openai/gpt-4o-mini
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+          EVENT_NAME: ${{ github.event_name }}
+          PUSH_BEFORE: ${{ github.event.before }}
+          PUSH_SHA: ${{ github.sha }}
+          INPUT_DRY_RUN: ${{ inputs.dry_run }}
+          INPUT_DIFF_RANGE: ${{ inputs.diff_range }}
+        run: |
+          set -eu
+
+          DRY_RUN_FLAG=""
+          RANGE=""
+
+          if [ "$EVENT_NAME" = "push" ]; then
+            RANGE="$PUSH_BEFORE..$PUSH_SHA"
+          fi
+
+          if [ -n "$INPUT_DIFF_RANGE" ]; then
+            RANGE="$INPUT_DIFF_RANGE"
+          fi
+
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ "$INPUT_DRY_RUN" = "true" ]; then
+            DRY_RUN_FLAG="--dry-run"
+          fi
+
+          if [ -n "$RANGE" ]; then
+            node scripts/post-bluesky-new-articles.mjs --range "$RANGE" $DRY_RUN_FLAG
+          else
+            node scripts/post-bluesky-new-articles.mjs $DRY_RUN_FLAG
+          fi

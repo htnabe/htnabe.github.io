@@ -1,0 +1,81 @@
+name: Update Algolia index
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: algolia-upload
+  cancel-in-progress: false
+
+jobs:
+  update-algolia:
+    if: github.ref == 'refs/heads/main' && vars.ALGOLIA_UPLOAD_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+          cache: false
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Install Dart Sass for Hugo
+        working-directory: ${{ runner.temp }}
+        run: |
+          set -eu
+          curl --fail --silent --show-error --location --retry 3 \
+            --output dart-sass.tar.gz \
+            https://github.com/sass/dart-sass/releases/download/1.106.1/dart-sass-1.106.1-linux-x64.tar.gz
+          echo "ad99cccb90de4ad2926e03e32d819c83baf32c3dbff56da92df0eed10e604d60  dart-sass.tar.gz" | sha256sum --check
+          tar -xzf dart-sass.tar.gz
+          echo "$PWD/dart-sass" >> "$GITHUB_PATH"
+
+      - name: Build search data
+        run: npm run build
+
+      - name: Namespace search record IDs by language
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync, writeFileSync } from "node:fs";
+          for (const [language, file] of [
+            ["ja", "public/algolia.json"],
+            ["en", "public/en/algolia.json"],
+          ]) {
+            const records = JSON.parse(readFileSync(file, "utf8"));
+            for (const record of records) {
+              record.objectID = `${language}:${record.objectID}`;
+            }
+            writeFileSync(file, JSON.stringify(records));
+          }
+          NODE
+
+      - name: Upload Japanese and English search data
+        env:
+          ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+          ALGOLIA_ADMIN_API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
+          ALGOLIA_INDEX_NAME: ${{ secrets.ALGOLIA_INDEX_NAME }}
+        run: |
+          set -eu
+          : "${ALGOLIA_APP_ID:?Set the ALGOLIA_APP_ID repository secret}"
+          : "${ALGOLIA_ADMIN_API_KEY:?Set the ALGOLIA_ADMIN_API_KEY repository secret}"
+          : "${ALGOLIA_INDEX_NAME:?Set the ALGOLIA_INDEX_NAME repository secret}"
+          npx --no-install algolia-uploader --data-files public/algolia.json public/en/algolia.json

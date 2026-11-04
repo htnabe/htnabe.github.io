@@ -1,0 +1,28 @@
+{
+  "sum": "755e8c809a61d416",
+  "dependencySources": {
+    "dependencies": {
+      "@algolia/client-search": "github.com/htnabe/HikaeMe/v2",
+      "@popperjs/core": "github.com/htnabe/HikaeMe/v2",
+      "algoliasearch": "github.com/htnabe/HikaeMe/v2",
+      "bootstrap": "github.com/htnabe/HikaeMe/v2",
+      "instantsearch.js": "github.com/htnabe/HikaeMe/v2"
+    },
+    "devDependencies": {
+      "@fullhuman/postcss-purgecss": "github.com/htnabe/HikaeMe/v2",
+      "@htnabe/prettier-plugin-hugo-post": "github.com/htnabe/HikaeMe/v2",
+      "@playwright/test": "github.com/htnabe/HikaeMe/v2",
+      "@types/bootstrap": "github.com/htnabe/HikaeMe/v2",
+      "@types/node": "github.com/htnabe/HikaeMe/v2",
+      "autoprefixer": "github.com/htnabe/HikaeMe/v2",
+      "husky": "github.com/htnabe/HikaeMe/v2",
+      "jsdom": "github.com/htnabe/HikaeMe/v2",
+      "lint-staged": "github.com/htnabe/HikaeMe/v2",
+      "npm-check-updates": "github.com/htnabe/HikaeMe/v2",
+      "postcss": "github.com/htnabe/HikaeMe/v2",
+      "postcss-cli": "github.com/htnabe/HikaeMe/v2",
+      "prettier": "github.com/htnabe/HikaeMe/v2",
+      "vitest": "github.com/htnabe/HikaeMe/v2"
+    }
+  }
+}

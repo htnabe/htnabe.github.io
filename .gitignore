@@ -1,0 +1,15 @@
+/.env
+.ht*
+/public
+node_modules/
+/.pnpm-store
+/resources/
+.hugo_build.lock
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.lycheecache

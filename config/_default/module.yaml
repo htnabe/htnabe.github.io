@@ -1,0 +1,3 @@
+imports:
+  - path: "github.com/htnabe/HikaeMe/v2"
+  # - path: "../../HikaeMe"

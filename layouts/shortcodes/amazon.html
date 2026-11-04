@@ -1,0 +1,37 @@
+{{- /* Overrides the HikaeMe theme shortcode: some ASINs have no image under the
+  images-na.ssl-images-amazon.com pattern, so allow an explicit img_url. */
+-}}
+{{- $affiliateId := .Site.Params.amazonAssociateId -}}
+{{- $asin := .Get "asin" -}}
+{{- $title := .Get "title" -}}
+{{- $alt := .Get "alt" | default $title | default "amazon product image" -}}
+{{- $imgUrl := .Get "img_url" | default (printf "https://images-na.ssl-images-amazon.com/images/P/%s.09.LZZZZZZZ.jpg" $asin) -}}
+<div class="card mb-3 border-0 bg-body-secondary shadow">
+  <div class="row g-0">
+    <div class="col-sm-3 d-flex align-items-center justify-content-center">
+      <img
+        class="img-fluid amazon-product-image shadow-none rounded"
+        src="{{ $imgUrl }}"
+        alt="{{ $alt }}"
+        loading="lazy"
+      />
+    </div>
+    <div class="col-sm-9">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a
+            href="https://www.amazon.co.jp/gp/product/{{ $asin }}/?tag={{ $affiliateId }}"
+            target="_blank"
+            rel="nofollow sponsored noopener noreferrer"
+          >
+            <i class="bi bi-box-arrow-up-right"></i>&nbsp;{{ $title }}
+          </a>
+        </h5>
+        <p class="card-text text-body-secondary">
+          <i class="bi bi-amazon"></i>
+          amazon.co.jp
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

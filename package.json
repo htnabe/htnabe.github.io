@@ -1,0 +1,51 @@
+{
+  "author": "htnabe",
+  "bugs": {
+    "url": "https://github.com/htnabe/htnabe.github.io/issues"
+  },
+  "description": "My new blog which describes my current situation",
+  "homepage": "https://github.com/htnabe/htnabe.github.io#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "name": "t-pot",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/htnabe/htnabe.github.io.git"
+  },
+  "scripts": {
+    "algolia": "node scripts/run-hugo.mjs && algolia-uploader",
+    "build": "node scripts/run-hugo.mjs --minify --gc",
+    "check:amazon-images": "node scripts/repair-amazon-shortcode-images.mjs --check",
+    "dev": "node scripts/run-hugo.mjs server --gc --watch",
+    "dev:166": "node scripts/run-hugo.mjs server --gc --watch",
+    "fix:amazon-images": "node scripts/repair-amazon-shortcode-images.mjs --fix",
+    "fix:amazon-images:staged": "node scripts/repair-amazon-shortcode-images.mjs --fix --staged",
+    "fix:table-shortcode": "node scripts/fix-table-shortcode.mjs",
+    "post:bluesky:new-articles": "node scripts/post-bluesky-new-articles.mjs",
+    "sync:image-urls": "node scripts/sync-bilingual-image-urls.mjs",
+    "sync:image-urls:staged": "node scripts/sync-bilingual-image-urls.mjs --staged",
+    "linkcheck:md": "find content -type f -name '*.md' -print0 | xargs -0 lychee --cache --no-progress --max-concurrency 32 --timeout 10 --base-url https://htnabe.github.io/ --accept 200..=299,403,429 --accept-timeouts --exclude '^file://'",
+    "linkcheck:md:changed": "git diff --name-only --diff-filter=ACMRT origin/main...HEAD -- 'content/**/*.md' | tr '\\n' '\\0' | xargs -0 -r lychee --cache --no-progress --max-concurrency 32 --timeout 10 --base-url https://htnabe.github.io/ --accept 200..=299,403,429 --accept-timeouts --exclude '^file://'",
+    "linkcheck:md:staged": "git diff --name-only --cached --diff-filter=ACMRT -- 'content/**/*.md' | tr '\\n' '\\0' | xargs -0 -r lychee --cache --no-progress --max-concurrency 32 --timeout 10 --base-url https://htnabe.github.io/ --accept 200..=299,403,429 --accept-timeouts --exclude '^file://'",
+    "update": "ncu -u && npm i",
+    "update:theme": "hugo mod tidy && hugo mod get -u github.com/htnabe/HikaeMe/v2 && hugo mod npm pack && npm install",
+    "format": "prettier --write .",
+    "prepare": "husky"
+  },
+  "version": "1.0.0",
+  "workspaces": [
+    "packages/hugoautogen"
+  ],
+  "lint-staged": {
+    "*.md": [
+      "npm run fix:table-shortcode --"
+    ],
+    "*.{js,ts,jsx,tsx,html,yaml,yml,css,scss,json}": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@htnabe/prettier-plugin-go-template": "^0.0.5",
+    "algolia-uploader": "^0.0.20"
+  }
+}

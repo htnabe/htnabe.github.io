@@ -1,0 +1,2 @@
+node scripts/sync-bilingual-image-urls.mjs --staged
+npm exec lint-staged
