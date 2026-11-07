@@ -50,6 +50,8 @@ jobs:
           echo "$PWD/dart-sass" >> "$GITHUB_PATH"
 
       - name: Build search data
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: npm run build
 
       - name: Namespace search record IDs by language

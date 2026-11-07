@@ -4,7 +4,7 @@ This project is a Hugo-based blog with a Hugo module theme.
 
 ## Root Files
 
-- `README.md`: Human-facing setup and command entry point
+- `README.md`: Repository overview and licenses
 - `AGENTS.md`: Agent-facing orientation and task/automation index
 - `config/_default/`: Main Hugo configuration split by key (for example `hugo.yaml`, `params.yaml`, `menus.yaml`)
 - `package.json`: Build/dev/update scripts and npm-managed Node dependencies

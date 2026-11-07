@@ -7,11 +7,9 @@ import { pathToFileURL } from "node:url";
 import { promisify } from "node:util";
 
 const exec = promisify(execFile);
-const version = "0.166.0";
-const asset = `hugo_extended_${version}_linux-amd64.tar.gz`;
-const release = `https://github.com/gohugoio/hugo/releases/download/v${version}`;
+const latestRelease = "https://api.github.com/repos/gohugoio/hugo/releases/latest";
 
-async function validateBinary(binary) {
+async function validateBinary(binary, version) {
   const { stdout } = await exec(binary, ["version"], { timeout: 10_000 });
   const reported = /^hugo v(\d+\.\d+\.\d+)(?:-\S+)?\+extended(?:\+withdeploy)?\s/.exec(stdout);
   if (reported?.[1] !== version) {
@@ -19,8 +17,8 @@ async function validateBinary(binary) {
   }
 }
 
-async function download(url, fetchRelease) {
-  const response = await fetchRelease(url, { signal: AbortSignal.timeout(120_000) });
+async function download(url, fetchRelease, headers) {
+  const response = await fetchRelease(url, { signal: AbortSignal.timeout(120_000), headers });
   if (!response.ok) {
     throw new Error(`Hugo download failed: HTTP ${response.status} from ${url}`);
   }
@@ -38,6 +36,24 @@ export async function ensureHugo({
       `Unsupported Hugo platform: ${platform}/${arch}; this runner supports linux/x64`
     );
   }
+  const metadata = await (
+    await download(latestRelease, fetchRelease, {
+      Accept: "application/vnd.github+json",
+      ...(process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}),
+    })
+  ).json();
+  const tag = metadata?.tag_name;
+  if (
+    typeof tag !== "string" ||
+    !/^v\d+\.\d+\.\d+$/.test(tag) ||
+    metadata.draft !== false ||
+    metadata.prerelease !== false
+  ) {
+    throw new Error("Invalid latest Hugo release: expected a stable version tag");
+  }
+  const version = tag.slice(1);
+  const asset = `hugo_extended_${version}_linux-amd64.tar.gz`;
+  const release = `https://github.com/gohugoio/hugo/releases/download/${tag}`;
   const directory = join(resolve(cacheRoot), "t-pot", "hugo", `${version}-linux-amd64`);
   const binary = join(directory, "hugo");
   let installed = true;
@@ -48,7 +64,8 @@ export async function ensureHugo({
     installed = false;
   }
   if (installed) {
-    await validateBinary(binary);
+    await validateBinary(binary, version);
+    console.error(`Using latest Hugo ${version} extended from ${binary}`);
     return binary;
   }
 
@@ -77,7 +94,7 @@ export async function ensureHugo({
     await writeFile(archivePath, archive);
     await exec("tar", ["-xzf", archivePath, "-C", temporary, "hugo"], { timeout: 120_000 });
     await chmod(extracted, 0o755);
-    await validateBinary(extracted);
+    await validateBinary(extracted, version);
     // Atomic publication keeps concurrent starts from seeing an incomplete executable.
     await rename(extracted, binary);
     return binary;

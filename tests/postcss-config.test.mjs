@@ -2,14 +2,15 @@ import assert from "node:assert/strict";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import test from "node:test";
+import { test, vi } from "vitest";
 import postcss from "postcss";
 
 async function loadConfig(environment) {
   const previous = process.env.HUGO_ENVIRONMENT;
   process.env.HUGO_ENVIRONMENT = environment;
   try {
-    return (await import(`../postcss.config.mjs?environment=${environment}`)).default;
+    vi.resetModules();
+    return (await import("../postcss.config.mjs")).default;
   } finally {
     if (previous === undefined) {
       delete process.env.HUGO_ENVIRONMENT;
