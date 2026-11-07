@@ -55,8 +55,6 @@
     ],
     "classes": [
       "active",
-      "alert",
-      "alert-warning",
       "align-items-center",
       "align-items-lg-center",
       "amazon-product-image",
@@ -80,7 +78,6 @@
       "bi-box-arrow-up-right",
       "bi-clock",
       "bi-exclamation-circle",
-      "bi-exclamation-square",
       "bi-facebook",
       "bi-github",
       "bi-hash",

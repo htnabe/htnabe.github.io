@@ -19,7 +19,6 @@ referenced from individual documents.
 ## Operations
 
 - [Bluesky Auto-Post](bluesky-auto-post.md): GitHub Actions setup and local dry-run procedure for new-post announcements.
-- [GitHub Pages Migration Plan](github-pages-migration-plan.md): phased migration from `t-pot.me` with the planned domain retirement date.
 
 ## Archive
 
