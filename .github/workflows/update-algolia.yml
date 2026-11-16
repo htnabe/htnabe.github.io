@@ -49,9 +49,12 @@ jobs:
           tar -xzf dart-sass.tar.gz
           echo "$PWD/dart-sass" >> "$GITHUB_PATH"
 
+      - name: Install Hugo
+        uses: peaceiris/actions-hugo@d1c81a15d4e6dca7086a17b9c2565cb70fd576bf # v3
+        with:
+          hugo-version: latest
+
       - name: Build search data
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
         run: npm run build
 
       - name: Namespace search record IDs by language

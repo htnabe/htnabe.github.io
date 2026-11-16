@@ -8,7 +8,7 @@
 - `brew` コマンドが使える前提
 - できるだけ手入力なしで、コマンド実行のみで初期化
 - `devcontainer` の `postCreateCommand` と同等の処理をローカルで再現
-- 開発・ビルド用 Hugo は起動ごとに最新安定版の extended を確認し、必要に応じて自動取得（Linux amd64 対応）
+- 開発・ビルド用 Hugo は Homebrew で導入した PATH 上の実行ファイルを使用（スクリプトによる自動取得・更新なし）
 
 ## 最短セットアップ (Ubuntu / brew前提)
 
@@ -38,11 +38,13 @@ npm run dev
 ```
 
 開発サーバ起動後は、`http://localhost:1313` で確認できます。
-`npm run dev` は毎回公式 GitHub API で最新安定版を確認するため、ネットワーク接続が必要です。
-未取得の最新版は公式リリースからダウンロードし、SHA-256 を検証してユーザーキャッシュに保存します。
-取得済みの最新版はキャッシュを再利用します。ダウンロードしたアーカイブの展開には `tar` が必要です。
-`npm run build`、`npm run algolia`、`npm run update:theme` と GitHub Actions も同じ処理を使います。
-Homebrew の `hugo` を直接使う場合は、`brew update` と `brew upgrade hugo` で別途更新してください。
+`npm run dev`、`npm run build`、`npm run algolia`、`npm run update:theme` は
+PATH 上の `hugo` を使い、自動取得・更新や最新版チェックは行いません。
+Hugo の更新は通常の Homebrew 更新処理（`brew update`、`brew upgrade`）で行ってください。
+使用される実行ファイルは `command -v hugo` と `hugo version` で確認できます。
+Hugo v0.170.0 以降は extended 版が通常版に統合されており、Sass の処理には Dart Sass が必要です。
+GitHub Actions ではビルド前に専用のセットアップアクションで最新安定版 Hugo を導入します。
+Hugo モジュールの取得にはネットワーク接続が必要な場合があります。
 
 ## 初回クローンから一気に実行したい場合
 
@@ -70,4 +72,4 @@ npm run dev
 - `public/` と `resources/` は生成物なので直接編集しません。
 - `npm ci --ignore-scripts` を使うため、Git hooks は `npm run prepare` で明示的に有効化します。
 - リンクチェックのみ実行したい場合は `npm run linkcheck:md` を使います。
-- 主要コマンド、Hugo の保存先と取得エラー時の対処は [Development Workflow](development-workflow.md) を参照してください。
+- 主要コマンドと Hugo の利用方法は [Development Workflow](development-workflow.md) を参照してください。

@@ -1,5 +1,5 @@
 {
-  "sum": "bd742e35713a9cad",
+  "sum": "147a3d829cf8d0ed",
   "dependencySources": {
     "dependencies": {
       "@algolia/client-search": "github.com/htnabe/HikaeMe/v2",
@@ -21,8 +21,7 @@
       "npm-check-updates": "github.com/htnabe/HikaeMe/v2",
       "postcss": "github.com/htnabe/HikaeMe/v2",
       "postcss-cli": "github.com/htnabe/HikaeMe/v2",
-      "prettier": "github.com/htnabe/HikaeMe/v2",
-      "vitest": "github.com/htnabe/HikaeMe/v2"
+      "prettier": "github.com/htnabe/HikaeMe/v2"
     }
   }
 }

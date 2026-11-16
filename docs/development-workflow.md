@@ -2,9 +2,9 @@
 
 ## Common Commands
 
-- `npm run dev`: Start the latest stable Hugo extended local server with watch mode.
-- `npm run build`: Run production build with the latest stable Hugo extended (`--minify --gc`).
-- `npm run algolia`: Rebuild content with the latest stable Hugo extended and upload Algolia search index.
+- `npm run dev`: Start the locally installed Hugo server with watch mode.
+- `npm run build`: Run production build with the locally installed Hugo (`--minify --gc`).
+- `npm run algolia`: Rebuild content with the locally installed Hugo and upload Algolia search index.
 - `npm test`: Run all automated tests once with Vitest.
 - `npm run test:watch`: Run Vitest in watch mode during development.
 - `npm run format`: Format repository files with Prettier.
@@ -12,43 +12,29 @@
 - `npm run update:theme`: Update Hugo module theme and refresh npm metadata/install state.
 - `npm run update`: Update npm dependencies via npm-check-updates.
 
-## Latest Hugo Extended
+## Installed Hugo
 
-Every invocation of `scripts/run-hugo.mjs` queries the official GitHub
-`gohugoio/hugo/releases/latest` API and uses the latest stable **Hugo extended**.
-Local development, production builds, Algolia builds, and theme updates all use
-this runner. GitHub Actions uses the same commands. The runner supports Linux
-amd64 and does not fall back to Hugo on `PATH`.
+The npm commands invoke `hugo` directly from `PATH` for local development,
+production builds, Algolia builds, and theme updates. They do not download,
+update, cache, or check Hugo's version. A missing executable fails explicitly;
+there is no automatic installation.
 
-For each newly released version, the runner downloads the official archive and
-checksums, verifies SHA-256, and caches the executable at
-`$XDG_CACHE_HOME/t-pot/hugo/<version>-linux-amd64/hugo` (or under
-`~/.cache/t-pot/hugo/` when `XDG_CACHE_HOME` is unset). Later invocations still
-check the latest release but reuse the verified binary if its version is current.
-Version and extended support are checked before execution.
+Install Hugo and Dart Sass with `brew install hugo dart-sass`, and keep them
+updated through your normal Homebrew maintenance (`brew update` and
+`brew upgrade`). Use `command -v hugo` and `hugo version` to check the executable
+used by npm commands. Hugo may need network access to fetch modules.
 
-Network access is required on every invocation; `tar` is required when installing
-a version. Actions supplies `GITHUB_TOKEN` for authenticated release lookup.
-Local lookup works without a token, subject to GitHub's unauthenticated API rate
-limit; an optional `GITHUB_TOKEN` authenticates only the metadata request.
+Hugo v0.170.0 and later use a unified binary without the `+extended` version
+marker. These versions no longer support LibSass; use Dart Sass for Sass builds.
+Older extended binaries remain usable if compatible with the theme.
 
-Release lookup, download, checksum, extraction, and version failures stop the
-command explicitly; an older cached or system Hugo is not silently used.
-For lookup/download failures, check GitHub connectivity and API rate limits.
-For an invalid cached executable, remove only the `hugo` file at the version's
-cache path above and rerun the command to download it again.
-An unsupported OS or architecture requires adding a verified release asset to
-the runner before these commands can be used there.
-
-Latest releases are adopted automatically, so a Hugo/theme incompatibility can
-break a build without a repository change. Run tests and a production build after
-new releases. The obsolete `dev:166` alias has been removed; use `npm run dev`.
-If invoking the Homebrew `hugo` command directly, keep it updated separately with
-`brew update` and `brew upgrade hugo`; npm commands do not modify that installation.
+GitHub Actions installs the latest stable Hugo with `peaceiris/actions-hugo`
+before running the same npm build command. Run tests and a production build
+after upgrading Hugo to check theme compatibility.
 
 Additional Hugo arguments can be passed normally, for example:
 `npm run dev -- --port 1413`.
-For Hugo operations without an npm alias, use `node scripts/run-hugo.mjs <args>`.
+For Hugo operations without an npm alias, use `hugo <args>`.
 
 ## Recommended Flow
 
@@ -64,8 +50,6 @@ follow the [Amazon Shortcode Image Repair](../.github/skills/amazon-shortcode-im
 
 ## Validation Notes
 
-- Run `npm test -- tests/hugo-runner.test.mjs` after changing the Hugo
-  runner or its download, cache, and process behavior.
 - Run `npm test -- tests/postcss-config.test.mjs` after PostCSS configuration or
   dependency changes to check production CSS purging and development behavior.
 - Guardrails for edit scope and generated directories: `docs/agent-guardrails.md`.
@@ -74,13 +58,8 @@ follow the [Amazon Shortcode Image Repair](../.github/skills/amazon-shortcode-im
 
 ## Automated Tests and CI
 
-The two suites under `tests/` run with Vitest in a Node environment:
+Tests under `tests/` run with Vitest in a Node environment:
 
-- `hugo-runner.test.mjs`: latest stable release lookup and upgrade detection,
-  download and checksum validation, cache reuse and
-  concurrent installation, version/platform rejection, CLI arguments, exit codes,
-  and signal forwarding. Downloads are simulated with local fixtures; the tests
-  require Linux amd64, Node.js, and `tar`, not a real Hugo download or API secrets.
 - `postcss-config.test.mjs`: production CSS purging, preservation of Hugo and
   Bootstrap classes, and development autoprefixing.
 

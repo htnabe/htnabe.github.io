@@ -13,10 +13,10 @@
     "url": "git+https://github.com/htnabe/htnabe.github.io.git"
   },
   "scripts": {
-    "algolia": "node scripts/run-hugo.mjs && algolia-uploader",
-    "build": "node scripts/run-hugo.mjs --minify --gc",
+    "algolia": "hugo && algolia-uploader",
+    "build": "hugo --minify --gc",
     "check:amazon-images": "node scripts/repair-amazon-shortcode-images.mjs --check",
-    "dev": "node scripts/run-hugo.mjs server --gc --watch",
+    "dev": "hugo server --gc --watch",
     "fix:amazon-images": "node scripts/repair-amazon-shortcode-images.mjs --fix",
     "fix:amazon-images:staged": "node scripts/repair-amazon-shortcode-images.mjs --fix --staged",
     "fix:table-shortcode": "node scripts/fix-table-shortcode.mjs",
@@ -29,7 +29,7 @@
     "linkcheck:md:changed": "git diff --name-only --diff-filter=ACMRT origin/main...HEAD -- 'content/**/*.md' | tr '\\n' '\\0' | xargs -0 -r lychee --cache --no-progress --max-concurrency 32 --timeout 10 --base-url https://htnabe.github.io/ --accept 200..=299,403,429 --accept-timeouts --exclude '^file://'",
     "linkcheck:md:staged": "git diff --name-only --cached --diff-filter=ACMRT -- 'content/**/*.md' | tr '\\n' '\\0' | xargs -0 -r lychee --cache --no-progress --max-concurrency 32 --timeout 10 --base-url https://htnabe.github.io/ --accept 200..=299,403,429 --accept-timeouts --exclude '^file://'",
     "update": "ncu -u && npm i",
-    "update:theme": "node scripts/run-hugo.mjs mod tidy && node scripts/run-hugo.mjs mod get -u github.com/htnabe/HikaeMe/v2 && node scripts/run-hugo.mjs mod npm pack && npm install",
+    "update:theme": "hugo mod tidy && hugo mod get -u github.com/htnabe/HikaeMe/v2 && hugo mod npm pack && npm install",
     "format": "prettier --write .",
     "prepare": "husky"
   },
